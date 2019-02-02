@@ -31,12 +31,11 @@ jobs:
             name : "Deployment at rancher"
             command : |
               docker run --rm -it \
-                -e RANCHER_ACCESS_KEY="$CATTLE_ACCESS_KEY" \
-                -e RANCHER_SECRET_KEY="$CATTLE_SECRET_KEY" \
-                -e RANCHER_URL="$CATTLE_URL" \
-                alpine/rancher-cli:1.0 upgrade $RANCHER_SERVICE \
+                -e CATTLE_ACCESS_KEY="$CATTLE_ACCESS_KEY" \
+                -e CATTLE_SECRET_KEY="$CATTLE_SECRET_KEY" \
+                -e CATTLE_URL="$CATTLE_URL" \
+                etlweather/gaucho upgrade $RANCHER_SERVICE \
                 --imageUuid 'smjtheoff/devops-test-express:lastst' \
-                --batch_size 3 --start_first=True \
-                --auto_complete=True --timeout=600 \
-                /
+                --batch_size 3 --start_first \
+                --auto_complete --timeout=600
       - run: echo Done
