@@ -36,7 +36,7 @@ jobs:
                 -e CATTLE_URL="$CATTLE_URL" \
                 etlweather/gaucho upgrade $RANCHER_SERVICE \
                 --imageUuid 'smjtheoff/devops-test-express:lastst' \
-                --batch_size 3 --start_first \
-                --auto_complete --timeout=600 \
+                --batch_size 3 --start_first=True \
+                --auto_complete=True --timeout=600 \
                 /
       - run: echo Done
