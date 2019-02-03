@@ -16,7 +16,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-  deploy:
+  ship:
     docker:
       - image: circleci/node:8.11.1-stretch
     steps:
@@ -30,6 +30,10 @@ jobs:
             docker build . -t smjtheoff/devops-test-express:${CIRCLE_SHA1}
             docker push smjtheoff/devops-test-express:lastst
             docker push smjtheoff/devops-test-express:${CIRCLE_SHA1}
+  deploy:
+    docker:
+       - image: circleci/node:8.11.1-stretch
+    steps:
       - run :
             name : "Deployment at rancher"
             command : |
@@ -47,7 +51,11 @@ workflows:
   test_deplpy_w_workflow:
       jobs:
         - build
+        - ship:
+            requires:
+             - build
         - deploy:
             type: approval
             requires:
-             - build
+              - build
+              - ship
