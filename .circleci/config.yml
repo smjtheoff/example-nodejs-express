@@ -42,3 +42,12 @@ jobs:
                 --batch_size 5 --start_first \
                 --auto_complete --timeout=600
       - run: echo Done
+workflows:
+  version: 2
+  test_deplpy_w_workflow:
+      jobs:
+        - build
+        - deploy:
+            type: approval
+            requires:
+             - build
